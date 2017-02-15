@@ -1,14 +1,10 @@
 ## Battleship Coding Challenge (Node)
 
-Node version of the [Battleship interview exercise](github.com/github/battleship)
-
-My hope is to stay fairly true to the Rails implementation, but while also being close enough to standard Node practices that a Node developer wouldn't be disgusted by this.
-
 For this coding challenge you'll build a simplified version of [battleship](https://en.wikipedia.org/wiki/Battleship_(game)). You'll have 3 ships that will be placed on a 10 by 10 grid which is the battleground. Each cell in the battleground is identified by its space on an x,y axis with [0,0] being the cell in the bottom left corner. Each ship is 1 cell wide and 3 cells long. On initial placement, each ship is oriented vertically. To initialize the playing field you'll receive a 2 dimensional array where each element in the array contains the x,y coordinates of each ship's topmost cell. So for example, if you receive this array [[0,3],[4,8],[6,6]] then your initial playing board will have ships that occupy the following cells:
 
 `[[0,3],[0,2],[0,1]]`, `[[4,8],[4,7],[4,6]]` and `[[6,6],[6,5],[6,4]]`
 
-Your game interface will be a basic HTTP API. We want you to flesh out the provided `battleships` app so that the `create` handler accepts a 2-dimensional array that contains the topmost cell coordinates of ships to initialize the playing board. You'll then need to complete the `update` handler to take x and y parameters and return the string "hit" if the coordinate lands on a ship. The `update` handler should return the string "miss" if the coordinate does not land on a ship. If a ship has been hit on all 3 of its cells then the `update` handler should return "sunk".
+Your game interface will be a basic HTTP API. Each of the methods should return a JSON response with a single property named `message`. We want you to flesh out the provided battleship app so that the `create` function in `app/game/index.js` accepts a 2-dimensional array (represented as JSON) that contains the topmost cell coordinates of ships to initialize the playing board. You'll then need to complete the `update` method to take x and y parameters and return a JSON response where `message` is set to the string "hit" if the coordinate lands on a ship. The `update` method should return the string "miss" for the `message` property if the coordinate does not land on a ship. If a ship has been hit on all 3 of its cells then the `update` method should return the string "sunk" for the `message` property.
 
 ### Getting Started
 
@@ -18,9 +14,16 @@ Your game interface will be a basic HTTP API. We want you to flesh out the provi
 4. `npm install`
 5. `npm test`
 
-### Inputs
+### Inputs and Outputs
 
-All inputs are given as strings
+When running against a local server the following sequence of commands should result in the following:
+
+| Command   | Response Body  |
+|---|---|
+| `curl -X POST -H 'Content-Type: application/json' --data '{"positions":[[0,3], [4,8], [6,6]]}' http://localhost:3000/battleship` | `{"message":"OK"}` |
+| `curl -X PUT -H 'Content-Type: application/json' --data '{"x":0, "y":1}' http://localhost:3000/battleship` | `{"message":"hit"}` |
+
+Note that on Windows, these commands have been tested in the CMD shell. They will not run as shown in PowerShell.
 
 ### Other Notes
 

@@ -2,9 +2,9 @@ module.exports = {
   create: function(req, res) {
     var positions = JSON.parse(req.body.positions)
 
-    // Fill in body to initialize the game and return a success response
+    // Fill in body to initialize the game and return a response that indicates success.
 
-    res.json({ message: 'success' })
+    res.json({ message: 'OK' })
   },
 
   update: function(req, res) {
