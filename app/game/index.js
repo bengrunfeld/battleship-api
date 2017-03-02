@@ -1,6 +1,5 @@
 module.exports = {
   create: function(req, res) {
-    var positions = JSON.parse(req.body.positions)
 
     // Fill in body to initialize the game and return a response that indicates success.
 
