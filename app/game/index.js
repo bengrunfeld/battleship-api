@@ -1,6 +1,7 @@
 module.exports = {
   create: function(req, res) {
-
+    var positions = req.body.positions
+    
     // Fill in body to initialize the game and return a response that indicates success.
 
     res.json({ message: 'OK' })
