@@ -4,7 +4,24 @@ For this coding challenge you'll build a simplified version of [battleship](http
 
 `[[0,3],[0,2],[0,1]]`, `[[4,8],[4,7],[4,6]]` and `[[6,6],[6,5],[6,4]]`
 
-Your game interface will be a basic HTTP API. Each of the methods should return a JSON response with a single property named `message`. We want you to flesh out the provided battleship app so that the `create` function in `app/game/index.js` accepts a 2-dimensional array (represented as JSON) that contains the topmost cell coordinates of ships to initialize the playing board. You'll then need to complete the `update` method to take x and y parameters and return a JSON response where `message` is set to the string "hit" if the coordinate lands on a ship. The `update` method should return the string "miss" for the `message` property if the coordinate does not land on a ship. If a ship has been hit on all 3 of its cells then the `update` method should return the string "sunk" for the `message` property.
+Your game interface will be a basic HTTP API. You should assume that you are implementing a spec that has already been published to clients and they will use the spec to learn how to interact with the game. Each of the methods should return a JSON response with a single property named `message`. 
+
+We want you to flesh out the provided battleship app so that the `create` function in `app/game/index.js` accepts a 2-dimensional array (represented as JSON) that contains the topmost cell coordinates of ships to initialize the playing board. 
+
+### Acceptance Criteria
+
+Once you implement the `create` function you'll then need to complete the `update` function to take x and y parameters and return the following JSON responses under the given conditions: 
+
+| Response | Condition |
+| --- | --- |
+| `{"message":"miss"}` | When the coordinate does not land on a ship. |
+| `{"message":"hit"}` | When the coordinate lands on a ship and the ship is not yet sunk. Multiple attacks on the same spot should return as hit unless the ship is already sunk. |
+| `{"message":"sunk"}` | When the ship has been hit on all 3 of its cells. Subsequent attacks on a sunk ship should continue to return a sunk response. |
+
+All responses should be lowercase letters only. We will evaluate your submission in two stages:
+
+1. **Correctness** - When you submit your solution, we will run it through a suite of automated tests to verify the above acceptance criteria are satisfied. 
+2. **Code quality** - If your solution satisfies the correctness check, then it will be evaluated by a pair of engineers for code quality. For more details see the [What we're looking for](#what-were-looking-for) section.
 
 ### Getting Started
 
