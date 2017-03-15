@@ -6,11 +6,11 @@ For this coding challenge you'll build a simplified version of [battleship](http
 
 Your game interface will be a basic HTTP API. You should assume that you are implementing a spec that has already been published to clients and they will use the spec to learn how to interact with the game. Each of the methods should return a JSON response with a single property named `message`. 
 
-We want you to flesh out the provided battleship app so that the `create` function in `app/game/index.js` accepts a 2-dimensional array (represented as JSON) that contains the topmost cell coordinates of ships to initialize the playing board. 
-
 ### Acceptance Criteria
 
-Once you implement the `create` function you'll then need to complete the `update` function to take x and y parameters and return the following JSON responses under the given conditions: 
+The `create` function in `app/game/index.js` should accept a 2-dimensional array (represented as JSON) that contains the topmost cell coordinates of ships to initialize the playing board. It should respond with the following JSON response: `{"message":"OK"}`
+
+The `update` function should take `x` and `y` parameters and return the following JSON responses under the given conditions: 
 
 | Response | Condition |
 | --- | --- |
@@ -23,14 +23,6 @@ All responses should be lowercase letters only. We will evaluate your submission
 1. **Correctness** - When you submit your solution, we will run it through a suite of automated tests to verify the above acceptance criteria are satisfied. 
 2. **Code quality** - If your solution satisfies the correctness check, then it will be evaluated by a pair of engineers for code quality. For more details see the [What we're looking for](#what-were-looking-for) section.
 
-### Getting Started
-
-1. This problem was built and tested with Node version 6.3.1
-2. You should have received an email with a repo url. Clone this repo
-3. `cd` into your local directory copy
-4. `npm install`
-5. `npm test`
-
 ### Inputs and Outputs
 
 When running against a local server the following sequence of commands should result in the following:
@@ -41,6 +33,14 @@ When running against a local server the following sequence of commands should re
 | `curl -X PUT -H 'Content-Type: application/json' --data '{"x":0, "y":1}' http://localhost:3000/battleship` | `{"message":"hit"}` |
 
 Note that on Windows, these commands have been tested in the CMD shell. They will not run as shown in PowerShell.
+
+### Getting Started
+
+1. This problem was built and tested with Node version 6.3.1
+2. You should have received an email with a repo url. Clone this repo
+3. `cd` into your local directory copy
+4. `npm install`
+5. `npm test`
 
 ### Other Notes
 
