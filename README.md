@@ -4,13 +4,13 @@ For this coding challenge you'll build a simplified version of [battleship](http
 
 `[[0,3],[0,2],[0,1]]`, `[[4,8],[4,7],[4,6]]` and `[[6,6],[6,5],[6,4]]`
 
-Your game interface will be a basic HTTP API. You should assume that you are implementing a spec that has already been published to clients and they will use the spec to learn how to interact with the game. Each of the methods should return a JSON response with a single property named `message`. 
+Your game interface will be a basic HTTP API. You should assume that you are implementing a spec that has already been published to clients and they will use the spec to learn how to interact with the game. Each of the methods should return a JSON response with a single property named `message`.
 
 ### Acceptance Criteria
 
-The `create` function in `app/game/index.js` should accept a 2-dimensional array (represented as JSON) that contains the topmost cell coordinates of ships to initialize the playing board. It should respond with the following JSON response: `{"message":"OK"}`
+A `POST` request should send a JSON body with a `positions` property that is 2-dimensional array that contains the topmost cell coordinates of ships to initialize the playing board. It should respond with the following JSON response: `{"message":"OK"}`
 
-The `update` function should take `x` and `y` parameters and return the following JSON responses under the given conditions: 
+A `PUT` request should send a JSON body with `x` and `y` properties that represent the coordinates to attack and return the following JSON responses under the given conditions:
 
 | Response | Condition |
 | --- | --- |
@@ -20,7 +20,7 @@ The `update` function should take `x` and `y` parameters and return the followin
 
 All responses should be lowercase letters only. We will evaluate your submission in two stages:
 
-1. **Correctness** - When you submit your solution, we will run it through a suite of automated tests to verify the above acceptance criteria are satisfied. 
+1. **Correctness** - When you submit your solution, we will run it through a suite of automated tests to verify the above acceptance criteria are satisfied.
 2. **Code quality** - If your solution satisfies the correctness check, then it will be evaluated by a pair of engineers for code quality. For more details see the [What we're looking for](#what-were-looking-for) section.
 
 ### Inputs and Outputs
@@ -33,6 +33,10 @@ When running against a local server the following sequence of commands should re
 | `curl -X PUT -H 'Content-Type: application/json' --data '{"x":0, "y":1}' http://localhost:3000/battleship` | `{"message":"hit"}` |
 
 Note that on Windows, these commands have been tested in the CMD shell. They will not run as shown in PowerShell.
+
+### Smoke Test
+
+To help you verify your implementation, we've included `test/smoke-test.js`. This test file doesn't cover the complete set of acceptance criteria but you can use it, unmodified, to verify you have a solution that runs with at least one example of expected input and output.
 
 ### Getting Started
 
