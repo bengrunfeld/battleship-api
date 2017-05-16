@@ -4,6 +4,9 @@ module.exports = {
     
     // Fill in body to initialize the game and return a response that indicates success.
 
+    // Access state via Environment Variable
+    let state = JSON.parse(process.env['STATE'])
+    
     res.json({ message: 'OK' })
   },
 
