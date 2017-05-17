@@ -52,6 +52,18 @@ module.exports = {
     return overlap
   },
 
+  placeShipsOnBoard: function(coords) {
+    let gameBoard = JSON.parse(process.env['STATE'])
+
+    coords.forEach((item, i, arr) => {
+      gameBoard[9 - item[1]][item[0]] = i + 1
+      gameBoard[9 - item[1] + 1][item[0]] = i + 1
+      gameBoard[9 - item[1] + 2][item[0]] = i + 1
+    })
+
+    process.env['STATE'] = JSON.stringify(gameBoard)
+  },
+
   create: function(req, res) {
     var positions = req.body.positions
     
@@ -74,6 +86,9 @@ module.exports = {
       res.json({ message: 'Ships overlap' })
       return false
     }
+
+    // Place the ships on the Game Board
+    this.placeShipsOnBoard(coords)
     
     res.json({ message: 'OK' })
   },
