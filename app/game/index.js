@@ -1,15 +1,55 @@
 module.exports = {
-  validateCoords: function(arr) {
+  validateCoords: function(coords) {
     let isValid = true 
 
     // Check that coordinates are valid (>2 && <9)
-    arr.forEach((item, i) => {
+    coords.forEach((item, i) => {
       if (item[0] < 0 || item[0] > 9 || item[1] < 2 || item[1] > 9) {
         isValid = false
       }
     })
 
     return isValid
+  },
+
+  detectOverlap: function(coords) {
+    // Detect if ships overlap
+    let overlap = false
+    let sameX = []
+
+    // Check if coords have same X Axis
+    if (coords[0][0] === (coords[1][0])) {
+      sameX.push([0,1])
+    }
+
+    if (coords[0][0] === (coords[2][0])) {
+      sameX.push([0,2])
+    }
+
+    if (coords[1][0] === (coords[2][0])) {
+      sameX.push([1,2])
+    }
+
+    // Go through the array of coords with same X Coord
+    // And check for overlapping Y Coords
+    sameX.forEach((item, i, arr) => {
+      firstX = item[0]
+      secondX = item[1]
+
+      if (coords[firstX] <= coords[secondX]) {
+        if (coords[firstX][1] > (coords[secondX][1] - 3)) {
+          overlap = true
+        }
+      }
+
+      if (coords[firstX] >= coords[secondX]) {
+        if (coords[firstX][1] < (coords[secondX][1] + 3)) {
+          overlap = true
+        }
+      }
+    })
+
+    return overlap
   },
 
   create: function(req, res) {
@@ -26,6 +66,12 @@ module.exports = {
     // Validate the Coordinates
     if (!this.validateCoords(coords)) {
       res.json({ message: 'Invalid coordinates' })
+      return false
+    }
+
+    // Check for overlapping ships
+    if (this.detectOverlap(coords)) {
+      res.json({ message: 'Ships overlap' })
       return false
     }
     
