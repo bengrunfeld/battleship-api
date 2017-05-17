@@ -62,6 +62,18 @@ module.exports = {
     })
 
     process.env['STATE'] = JSON.stringify(gameBoard)
+    console.log(gameBoard)
+  },
+
+  detectHit: function(x, y) {
+    // Detect a hit 
+    let gameBoard = JSON.parse(process.env['STATE'])
+    let hit = false
+
+    if (gameBoard[9 - y][x] !== 0) {
+      hit = true
+    }
+    return hit
   },
 
   create: function(req, res) {
@@ -95,7 +107,9 @@ module.exports = {
     y = req.body.y
 
     // Fill in body to take x and y coordinates and return result as "miss", "hit" or "sunk"
-    var result = null
+    var result = 'miss'
+
+    console.log(this.detectHit(x, y))
 
     res.json({ message: result })
   }
