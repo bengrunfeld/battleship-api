@@ -25,7 +25,24 @@ router.put('/', function(req, res) {
 // Define all of our ROUTES
 app.use('/battleship', router)
 
-app.listen(port)
+function initializeBoard() {
+  // Set up Environment Variable to maintain game state
+  let gameState = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ]
+  process.env['STATE'] = JSON.stringify(gameState)
+}
+
+app.listen(port, initializeBoard)
 console.log('Server started on port ' + port)
 
 module.exports = app
