@@ -62,18 +62,39 @@ module.exports = {
     })
 
     process.env['STATE'] = JSON.stringify(gameBoard)
-    console.log(gameBoard)
   },
 
   detectHit: function(x, y) {
-    // Detect a hit 
+    // If the attack hits a ship, return the ship number and successful hit
     let gameBoard = JSON.parse(process.env['STATE'])
-    let hit = false
+    let result = {success: false, ship: null}
+    let cellContents = gameBoard[9 - y][x]
 
-    if (gameBoard[9 - y][x] !== 0) {
-      hit = true
+    if (cellContents !== 0) {
+      result = {success: true, ship: cellContents}
     }
-    return hit
+
+    return result
+  },
+
+  updateShipStatus: function(ship) {
+    // Update the number of hits a ship has taken
+    
+    if(typeof(process.env['SHIP' + ship]) === 'undefined') {
+      // This is the ships first hit
+      process.env['SHIP' + ship] = '1'
+      return 'hit'
+    } 
+    
+    if (parseInt(process.env['SHIP' + ship], 10) < 3) {
+      // The ship has been hit, but has not been sunk yet.
+      process.env['SHIP' + ship] = JSON.stringify(parseInt(process.env['SHIP' + ship], 10) + 1)
+      return 'hit'
+    } else {
+      // Ship has already been sunk
+      return 'sunk'
+    }
+
   },
 
   create: function(req, res) {
@@ -109,7 +130,12 @@ module.exports = {
     // Fill in body to take x and y coordinates and return result as "miss", "hit" or "sunk"
     var result = 'miss'
 
-    console.log(this.detectHit(x, y))
+    // Test the attack
+    let wasHit = this.detectHit(x, y)
+
+    if (wasHit.success) {
+      result = this.updateShipStatus(wasHit.ship)
+    }
 
     res.json({ message: result })
   }
